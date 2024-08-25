@@ -17,6 +17,7 @@ public class App {
     private final ConsoleService consoleService = new ConsoleService();
     private final AuthenticationSvcs authenticationService = new AuthenticationSvcsImpl(API_BASE_URL);
     private final TransferSvcs transferService = new TransferSvcsImpl(API_BASE_URL);
+    private final AccountSvcs accountSvcs = new AccountSvcsImpl(API_BASE_URL);
 
     // Stores the currently authenticated user
     private AuthenticatedUser currentUser;
@@ -115,7 +116,8 @@ public class App {
             int transferType = transfer.getTransferTypeId();
             int transferId = transfer.getTransferId();
             String transferDes = (transferType == 1)? "From" : "To";
-            String fromToUser = transferService.getUserNameByUserId(  (transferType == 1) ? transfer.getAccountFrom() : transfer.getAccountTo()  );
+            String fromToUser = transferService.getUserNameByUserId(
+                    (transferType == 1) ? accountSvcs.getUserID(transfer.getAccountFrom()) : accountSvcs.getUserID(transfer.getAccountTo())  );
             consoleService.printTransfers(transferId, transferDes, fromToUser, transfer.getAmount());
         }
         int selection = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");

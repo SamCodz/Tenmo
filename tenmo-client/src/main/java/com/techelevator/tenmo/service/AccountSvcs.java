@@ -19,6 +19,9 @@ public interface AccountSvcs {
      */
     Account getAccount(int accountId);
 
+    // Retrieves userID for a given account ID
+    int getUserID(int accountId);
+
     /**
      * Retrieves the balance for an authenticated user's account.
      *
