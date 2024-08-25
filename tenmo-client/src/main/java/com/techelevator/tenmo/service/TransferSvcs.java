@@ -76,10 +76,4 @@ public interface TransferSvcs {
      * @return The User object containing the user's information.
      */
     User getUserByUserId(int id);
-
-
-    Transfer getTransfer(int transfer_id);
-
-    //get username of ID
-    String getUserNameByUserId(int id);
 }

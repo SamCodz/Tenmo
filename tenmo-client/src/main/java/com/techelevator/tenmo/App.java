@@ -6,7 +6,6 @@ import com.techelevator.tenmo.dto.TransferDto;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
 
 public class App {
 
@@ -106,56 +105,6 @@ public class App {
 
     // Displays transfer history and allows viewing details of a specific transfer
     private void viewTransferHistory() {
-		// TODO Auto-generated method stub
-        List<Transfer> transfers = null;
-        transfers = transferService.getTransfersForUser();
-        
-        consoleService.printTransfers();
-        for (Transfer transfer: transfers){
-            int transferType = transfer.getTransferTypeId();
-            int transferId = transfer.getTransferId();
-            String transferDes = (transferType == 1)? "From" : "To";
-            String fromToUser = transferService.getUserNameByUserId(  (transferType == 1) ? transfer.getAccountFrom() : transfer.getAccountTo()  );
-            consoleService.printTransfers(transferId, transferDes, fromToUser, transfer.getAmount());
-        }
-        int selection = consoleService.promptForInt("Please enter transfer ID to view details (0 to cancel): ");
-
-        if ((selection != 0)) {
-            viewTransfer(selection);
-        }
-
-
-    }
-    private void viewTransfer(int id){
-        Transfer transfer = null;
-        transfer = transferService.getTransfer(id);
-        String fromUser = transferService.getUserNameByUserId(transfer.getAccountFrom());
-        String toUser = transferService.getUserNameByUserId(transfer.getAccountTo());
-        String type = transfer.getType();
-        int statusID = transfer.getTransferStatusId();
-        String status;
-        if (statusID==1) {
-            status= "Pending";
-        }else if (statusID==1) {
-            status= "Approved";
-        }else{
-            status= "Rejected";
-        }
-
-        
-        
-        consoleService.printTransfer(transfer.getTransferId(), fromUser, toUser, type, status, transfer.getAmount());
-    }
-
-
-
-
-
-
-
-
-
-    private void viewTransferHistory2() {
         List<Transfer> transfers = transferService.getTransfersForUser();
         consoleService.printTransferHistory(transfers);
 
