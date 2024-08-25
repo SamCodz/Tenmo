@@ -2,8 +2,11 @@ package com.techelevator.tenmo.service;
 
 import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
+import com.techelevator.util.BasicLogger;
 import com.techelevator.tenmo.dto.TransferDto;
 import org.springframework.http.*;
+import org.springframework.web.client.ResourceAccessException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -102,4 +105,33 @@ public class TransferSvcsImpl implements TransferSvcs {
         headers.setBearerAuth(authToken);
         return new HttpEntity<>(body, headers);
     }
+
+    //Get transfer by ID
+    public Transfer getTransfer(int transfer_id) {
+        Transfer transfer = null;
+        try {
+            ResponseEntity<Transfer> response =
+                    restTemplate.exchange(baseUrl+ transfer_id, HttpMethod.GET, makeAuthEntity(), Transfer.class);
+            transfer = response.getBody();
+        } catch (RestClientResponseException | ResourceAccessException e) {
+            BasicLogger.log(e.getMessage());
+        }
+        return transfer;
+    }
+
+        //get username of ID
+        public String getUserNameByUserId(int id) {
+            User user = null;
+            try {
+                ResponseEntity<User> response = restTemplate.exchange(baseUrl + "users/" + id, HttpMethod.GET, makeAuthEntity(), User.class);
+                
+                user = response.getBody();
+            } catch (RestClientResponseException e) {
+                BasicLogger.log(e.getRawStatusCode() + " : " + e.getStatusText());
+            } catch (ResourceAccessException e) {
+                BasicLogger.log(e.getMessage());
+            }
+    
+            return user.getUsername();
+        }
 }

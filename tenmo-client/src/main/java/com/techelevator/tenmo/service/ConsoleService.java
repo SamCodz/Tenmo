@@ -108,6 +108,37 @@ public class ConsoleService {
     }
 
     // Displays a list of transfers
+    public void printTransfers() {
+        System.out.println("-------------------------------------------");
+        System.out.println("Transfers");
+        System.out.println("ID          From/To                 Amount");
+        System.out.println("-------------------------------------------");
+    }
+
+    
+    public void printTransfers(int id, String descrip, String username, BigDecimal amount) {
+        System.out.print(id + "          ");
+        System.out.print(descrip+": " + username);
+        System.out.println("          $ " +amount);
+    }
+
+
+    public void printTransfer(int id, String uFrom, String uTo, String type, String status, BigDecimal amount) {
+        System.out.println("Id: "+id );
+        System.out.println("From: "+uFrom);
+        System.out.println("To: "+ uTo);
+        System.out.println("Type: " + type);
+        System.out.println("Status: "+ status);
+        System.out.println("Amount: $"+ amount);
+    }
+
+
+
+
+
+
+
+
     public void printTransferHistory(List<Transfer> transfers) {
         System.out.println("-------------------------------------------");
         System.out.println("Transfers");
