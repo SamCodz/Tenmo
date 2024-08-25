@@ -32,26 +32,6 @@ public class AccountSvcsImpl implements AccountSvcs {
         }
     }
 
-    // Retrieves userID for a given account ID
-    @Override
-    public int getUserID(int accountId) {
-        int id = 0;
-        try {
-            ResponseEntity<Account> response = restTemplate.exchange(baseUrl + "account/" + accountId, HttpMethod.GET, makeAuthEntity(), Account.class);
-            id = response.getBody().getUserId();
-        } catch (RestClientResponseException e) {
-            System.out.println("Error getting account: " + e.getRawStatusCode() + " : " + e.getStatusText());
-
-        }
-        return id;
-    }
-
-
-
-
-
-
-
     // Retrieves the balance for the authenticated user's account
     @Override
     public BigDecimal getBalance(AuthenticatedUser user) {
